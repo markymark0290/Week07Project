@@ -17,10 +17,13 @@ public class ProjectsApp {
 	//Step 2
 	private Scanner scanner = new Scanner(System.in);
 	private ProjectService projectService = new ProjectService();
+	private Project curProject = new Project();
 	//Step 1 
 	//@formatter:off
 	private List<String> operations = List.of(
-	"1) Add a project"
+	"1) Add a project",
+	"2) List projects",
+	"3) Select a project"
 	);
 	//@formatter:off
 	
@@ -48,6 +51,14 @@ public class ProjectsApp {
 					createProject();
 					break;
 				
+				case 2:
+					listProjects();
+					break;
+				
+				case 3:
+					selectProject();
+					break;
+				
 				default:
 					System.out.println("\n" + selection + " is not valid. Try again.");
 					break;
@@ -55,8 +66,32 @@ public class ProjectsApp {
 				
 			}catch (Exception e){
 				System.out.println("\nError: " + e.toString() + " Try again.");
+				//e.printStackTrace();
 			}
 		}
+		
+	}
+
+	private void selectProject() {
+		listProjects();
+		Integer projectId = getIntInput("Enter a project ID");
+		curProject = null;
+		curProject = projectService.fetchProjectById(projectId);
+		
+		if(Objects.isNull(projectId)) {
+			System.out.println("\nYou are not working in a project.");
+		}else {
+			System.out.println("\nYou are working with project: " + curProject);
+		}
+	}
+
+	private void listProjects() {
+		List<Project> projects = projectService.fetchAllProjects();
+		
+		System.out.println("\nProjects:");
+		
+		projects.forEach(project -> System.out.println("   " + project.getProjectId() + ": "
+				+ project.getProjectName()));
 		
 	}
 
