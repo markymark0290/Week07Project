@@ -3,7 +3,6 @@ package projects.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
 import projects.exception.DbException;
 
 public class DbConnection {
@@ -16,7 +15,7 @@ public class DbConnection {
 	public static Connection getConnection() {
 		String url = String.format("jdbc:mysql://%s:%d/%s?user=%s&password=%s&useSSL=false", HOST, PORT, SCHEMA,USER,PASSWORD);
 		
-		System.out.println("Connection with url=" + url);
+		//System.out.println("Connection with url=" + url);
 		
 		try {
 			Connection conn = DriverManager.getConnection(url);
